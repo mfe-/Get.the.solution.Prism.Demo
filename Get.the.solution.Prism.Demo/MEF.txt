@@ -1,0 +1,23 @@
+﻿
+https://stefanhenneken.wordpress.com/2011/05/22/mef-teil-1-grundlagen-imports-und-exports/
+
+Export gibt an, dass die Klasse per DI injezierbar ist
+Import gibt an, dass wir hier eine Exportierte Klassen instanz injezieren wollen
+
+Import und Export attribut in der Dll System.ComponentModel.Composition 
+
+ComposablePartCatalog - kontrolliert das Laden der komponenten - composable Parts
+CompositionContainer - erstellt die instanzen
+
+Zum Export können MetaDaten zuverfügung gestellt werden
+Für jeden Import wird eine Instanz erstellt. Diese wird default mäßig für alle Imports geteilt.
+Will man das nicht --> [PartCreationPolicy(CreationPolicy.NonShared)]
+
+Lifecyle
+Wenn man einen Container nicht mehr benötigt --> Dispose() aufrufen
+
+Composable Parts sind Objekte (Klassen, Schnittstellen, Methoden Eigenschaften), die mit dem Attribut Import, ImportMany oder Export dekoriert werden
+Über die Klasse CompositionContainer wird das Laden und Binden der Composable Parts gestartet.
+
+Recomposition
+Composable PArts zur Laufzeit nachladen. Get nur wenn Import oder ImportMany die Eigenschaft AllowRecomposition auf TRUE gesetzt hat.
