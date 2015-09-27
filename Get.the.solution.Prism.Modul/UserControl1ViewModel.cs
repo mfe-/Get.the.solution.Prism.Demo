@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Get.the.solution.Prism.Modul
 {
-    public class UserControl1ViewModel
+    public class UserControl1ViewModel 
     {
         public UserControl1ViewModel()
         {

@@ -19,25 +19,31 @@ namespace Get.the.solution.Prism.Demo
         private readonly IRegionManager RegionManager;
 
         [ImportingConstructor]
-        public MainWindowViewModel([ImportMany(typeof(IMenu))]IEnumerable<IMenu> menuitems,IRegionManager regionManager)
+        public MainWindowViewModel([ImportMany(typeof(IMenuItem))]IEnumerable<IMenuItem> menuitems, IRegionManager regionManager)
         {
             RegionManager = regionManager;
-            Menu = new ObservableCollection<IMenu>();
-            //Menu.AddRange(menuitems);
+            Menu = new ObservableCollection<IMenuItem>();
+            foreach(IMenuItem item in menuitems)
+            {
+                Menu.Add(item);
+            }
 
-            OpenFileCommand = new DelegateCommand(OnOpenFileCommand);
+            OpenFileCommand = new DelegateCommand<String>(OnOpenFileCommand);
         }
 
-        public DelegateCommand OpenFileCommand { get; set; }
+        public DelegateCommand<String> OpenFileCommand { get; set; }
 
-        public void OnOpenFileCommand()
+        public void OnOpenFileCommand(String uri)
         {
-            RegionManager.RequestNavigate(RegionNames.ShellContent, new Uri("/UserControlOther", UriKind.Relative));
+            if (!String.IsNullOrWhiteSpace(uri))
+            {
+                RegionManager.RequestNavigate(RegionNames.ShellContent, new Uri(uri, UriKind.Relative));
+            }
         }
 
-        private ICollection<IMenu> _Menu;
+        private ICollection<IMenuItem> _Menu;
 
-        public ICollection<IMenu> Menu
+        public ICollection<IMenuItem> Menu
         {
             get { return _Menu; }
             set { _Menu = value; }

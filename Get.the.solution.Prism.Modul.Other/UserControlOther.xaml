@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:Get.the.solution.Prism.Modul.Other"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <TextBlock Text="UserControlOther" />   
-    </Grid>
+             d:DesignHeight="300" d:DesignWidth="300"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             >
+    <DockPanel Background="Green">
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=Text}" />
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=.}" />
+        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:UserControlOther}}}" />
+    </DockPanel>
 </UserControl>

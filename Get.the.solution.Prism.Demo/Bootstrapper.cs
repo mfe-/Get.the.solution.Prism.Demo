@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Registration;
+using System.ComponentModel.Composition.ReflectionModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,25 +14,25 @@ using Get.the.solution.Common;
 using Get.the.solution.Prism.Modul;
 using Get.the.solution.Prism.Modul.Other;
 using Prism.Mef;
+using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Regions;
+using System.ComponentModel.Composition.Primitives;
 
 namespace Get.the.solution.Prism.Demo
 {
-    public class Bootstrapper : MefBootstrapper 
+    public class Bootstrapper : MefBootstrapper
     {
-        protected override DependencyObject CreateShell()
+        /// <summary>
+        /// 1.
+        /// </summary>
+        protected override void ConfigureModuleCatalog()
         {
-            return this.Container.GetExportedValue<MainWindow>();
-        }
-        protected override void InitializeShell()
-        {
-            base.InitializeShell();
-
-            Application.Current.MainWindow = (MainWindow)this.Shell;
-            Application.Current.MainWindow.Show();
+            ModuleCatalog catalog = (ModuleCatalog)ModuleCatalog;
+            catalog.AddModule(typeof(AnOtherModul));
         }
         /// <summary>
-        /// The ConfigureAggregateCatalog method allows you to add type registrations to the AggregateCatalog imperatively. 
+        /// 2. The ConfigureAggregateCatalog method allows you to add type registrations to the AggregateCatalog imperatively. 
         /// Btw. register all necessary types.
         /// </summary>
         protected override void ConfigureAggregateCatalog()
@@ -39,9 +42,30 @@ namespace Get.the.solution.Prism.Demo
             //export all classes which implement IWCFService
             registrationBuilder.ForTypesDerivedFrom<IWCFService>().Export<IWCFService>();
             //export the menu interface
-            registrationBuilder.ForTypesDerivedFrom<IMenu>().Export<IMenu>();
+            registrationBuilder.ForTypesDerivedFrom<IMenuItem>().Export<IMenuItem>();
             //inject the mainwindowviewmodel into the datacontext property
             registrationBuilder.ForType<MainWindow>().ImportProperty<MainWindowViewModel>(p => p.DataContext);
+
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
+            {
+                var viewName = viewType.FullName;
+                var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
+                var viewModelName = String.Format(CultureInfo.InvariantCulture, "{0}ViewModel", viewName, viewAssemblyName);
+
+                //var types = this.Container.Catalog.SelectMany(a => a.ExportDefinitions).Where(a => viewModelName == a.ContractName);
+                //if(types.Count()!=0)
+                //{
+                    
+                //}
+                //else
+                //{
+                //    return null;
+                //}
+
+                return new UserControlOtherViewModel().GetType();
+
+                return Type.GetType(viewModelName);
+            });
 
             //add current assembly to catalog
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly, registrationBuilder));
@@ -53,7 +77,33 @@ namespace Get.the.solution.Prism.Demo
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(UserControlOther).Assembly, registrationBuilder));
 
         }
+        /// <summary>
+        /// 3. 
+        /// </summary>
+        /// <returns></returns>
+        protected override CompositionContainer CreateContainer()
+        {
+            var container = base.CreateContainer();
+            //export container - so we can register additional types in the modules by importing the container
+            container.ComposeExportedValue(container);
 
+            return container;
+        }
+        /// <summary>
+        /// 4.
+        /// </summary>
+        protected override void RegisterBootstrapperProvidedTypes()
+        {
+            //call base method which register the 4 exports for the types logger, module, service and aggregation
+            base.RegisterBootstrapperProvidedTypes();
+
+            //register agent
+            this.Container.ComposeExportedValue<IWCFService>(new WCFService());
+        }
+        /// <summary>
+        /// 5.
+        /// </summary>
+        /// <returns></returns>
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
         {
             var factory = base.ConfigureDefaultRegionBehaviors();
@@ -62,21 +112,37 @@ namespace Get.the.solution.Prism.Demo
 
             return factory;
         }
-        protected override CompositionContainer CreateContainer()
+        /// <summary>
+        /// 6.
+        /// </summary>
+        /// <returns></returns>
+        protected override DependencyObject CreateShell()
         {
-            
-            var container = base.CreateContainer();
-            //export container - so we can register additional types in the modules by importing the container
-            container.ComposeExportedValue(container);
-            return container;
+            return this.Container.GetExportedValue<MainWindow>();
         }
-        protected override void RegisterBootstrapperProvidedTypes()
+        /// <summary>
+        /// 7.
+        /// </summary>
+        protected override void InitializeShell()
         {
-            //call base method which register the 4 exports for the types logger, module, service and aggregation
-            base.RegisterBootstrapperProvidedTypes();
+            base.InitializeShell();
 
-            //register agent
-            this.Container.ComposeExportedValue<IWCFService>(new WCFService());
+            Application.Current.MainWindow = (MainWindow)this.Shell;
+            Application.Current.MainWindow.Show();
+        }
+
+        //public static IEnumerable<Type> GetExportedTypes<T>()
+        //{
+        //    return catalog.Parts
+        //        .Where(part => IsPartOfType(part, typeof(T)))
+        //        .Select(part => ReflectionModelServices.GetPartType(part).Value);
+        //}
+
+        private static bool IsPartOfType(ComposablePartDefinition part, string exportTypeIdentity)
+        {
+            return (part.ExportDefinitions.Any(
+                def => def.Metadata.ContainsKey("ExportTypeIdentity") &&
+                       def.Metadata["ExportTypeIdentity"].Equals(exportTypeIdentity)));
         }
     }
 }

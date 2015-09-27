@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Get.the.solution.Common;
 
-namespace Get.the.solution.Prism.Demo
+namespace Get.the.solution.Prism.Modul.Other
 {
     public class Menu : Get.the.solution.Common.MenuItem
     {
         public override string Header
         {
-            get { return "Get.the.solution.Prism.Demo"; }
+            get { return "Get.the.solution.Prism.Modul.Other"; }
         }
 
         public override IEnumerable<IMenuItem> Items
@@ -21,8 +21,7 @@ namespace Get.the.solution.Prism.Demo
             {
                 return new List<Get.the.solution.Common.MenuItem>()
                     {
-                        new Get.the.solution.Common.MenuItem(){ Header="bla" },
-                        new Get.the.solution.Common.MenuItem(){ Header="Exit" }
+                        new Get.the.solution.Common.MenuItem(){ Header="UserControlOther", Tag="/UserControlOther" }
                     };
             }
         }

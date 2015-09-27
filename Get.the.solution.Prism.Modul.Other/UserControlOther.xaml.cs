@@ -20,8 +20,7 @@ namespace Get.the.solution.Prism.Modul.Other
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    //[ViewExport(RegionName = RegionNames.ShellContent)]
-    //[PartCreationPolicy(CreationPolicy.Shared)]
+    [Export]
     public partial class UserControlOther : UserControl
     {
         public UserControlOther()

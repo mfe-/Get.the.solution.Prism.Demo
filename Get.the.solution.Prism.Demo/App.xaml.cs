@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Prism.Mvvm;
 
 namespace Get.the.solution.Prism.Demo
 {
@@ -17,8 +18,10 @@ namespace Get.the.solution.Prism.Demo
         {
             base.OnStartup(e);
 
-            Bootstrapper bootup = new Bootstrapper();
-            bootup.Run();
+
+
+            Bootstrapper bootstrapper = new Bootstrapper();
+            bootstrapper.Run();
 
             this.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
