@@ -11,7 +11,5 @@
              >
     <DockPanel Background="Green">
         <TextBlock DockPanel.Dock="Top" Text="{Binding Path=Text}" />
-        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=.}" />
-        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:UserControlOther}}}" />
     </DockPanel>
 </UserControl>

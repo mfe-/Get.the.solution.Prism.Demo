@@ -13,7 +13,7 @@ namespace Get.the.solution.Prism.Modul.Other
     {
         public UserControlOtherViewModel()
         {
-            Text = "bla";
+            Text = "UserControlOtherViewModel";
         }
         private string _text;
 

@@ -4,17 +4,28 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Mvvm;
 using Prism.Regions;
 
 namespace Get.the.solution.Prism.Modul
 {
     [Export]
-    public class UserControl2ViewModel
+    public class UserControl2ViewModel : BindableBase
     {
-        [ImportingConstructor]
-        public UserControl2ViewModel(IRegionManager regionManager)
+        public UserControl2ViewModel()
         {
+            Text = "UserControl2ViewModel";
+        }
+        private string _text;
 
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                OnPropertyChanged("Text");
+            }
         }
     }
 }

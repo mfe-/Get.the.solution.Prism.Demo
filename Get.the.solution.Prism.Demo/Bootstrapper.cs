@@ -28,8 +28,6 @@ namespace Get.the.solution.Prism.Demo
         /// </summary>
         protected override void ConfigureModuleCatalog()
         {
-            ModuleCatalog catalog = (ModuleCatalog)ModuleCatalog;
-            catalog.AddModule(typeof(AnOtherModul));
         }
         /// <summary>
         /// 2. The ConfigureAggregateCatalog method allows you to add type registrations to the AggregateCatalog imperatively. 
@@ -37,6 +35,8 @@ namespace Get.the.solution.Prism.Demo
         /// </summary>
         protected override void ConfigureAggregateCatalog()
         {
+
+
             //https://stefanhenneken.wordpress.com/2013/01/21/mef-teil-11-neuerungen-unter-net-4-5/
             RegistrationBuilder registrationBuilder = new RegistrationBuilder();
             //export all classes which implement IWCFService
@@ -45,30 +45,13 @@ namespace Get.the.solution.Prism.Demo
             registrationBuilder.ForTypesDerivedFrom<IMenuItem>().Export<IMenuItem>();
             //inject the mainwindowviewmodel into the datacontext property
             registrationBuilder.ForType<MainWindow>().ImportProperty<MainWindowViewModel>(p => p.DataContext);
-
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
-            {
-                var viewName = viewType.FullName;
-                var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-                var viewModelName = String.Format(CultureInfo.InvariantCulture, "{0}ViewModel", viewName, viewAssemblyName);
-
-                //var types = this.Container.Catalog.SelectMany(a => a.ExportDefinitions).Where(a => viewModelName == a.ContractName);
-                //if(types.Count()!=0)
-                //{
-                    
-                //}
-                //else
-                //{
-                //    return null;
-                //}
-
-                return new UserControlOtherViewModel().GetType();
-
-                return Type.GetType(viewModelName);
-            });
-
             //add current assembly to catalog
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly, registrationBuilder));
+
+            registrationBuilder = new RegistrationBuilder();
+            //make sure the IMenuItem will be exported
+            registrationBuilder.ForTypesDerivedFrom<IMenuItem>().Export<IMenuItem>();
+
             //add common project to catalog
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(AutoPopulateExportedViewsBehavior).Assembly, registrationBuilder));
             //add our modul usercontrol1 and usercontrol2 to catalog

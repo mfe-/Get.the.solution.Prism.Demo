@@ -21,6 +21,7 @@ namespace Get.the.solution.Prism.Modul.Other
     /// Interaction logic for UserControl1.xaml
     /// </summary>
     [Export]
+    [PartCreationPolicy(CreationPolicy.Shared)]
     public partial class UserControlOther : UserControl
     {
         public UserControlOther()

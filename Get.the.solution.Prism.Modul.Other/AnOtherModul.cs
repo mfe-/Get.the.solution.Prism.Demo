@@ -34,23 +34,8 @@ namespace Get.the.solution.Prism.Modul.Other
         /// it is not recommended to use the ServiceLocator to get the CompositeContainer</remarks>
         public void Initialize()
         {
-            //maybe we need that later
+            //register our view manual
             var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
-
-            //////////we can get the compositionContainer because we exported it in the bootstrapper
-            ////////CompositionContainer container = ServiceLocator.Current.GetInstance<CompositionContainer>();
-
-            ////////RegistrationBuilder registrationBuilder = new RegistrationBuilder();
-  
-            //////////inject the mainwindowviewmodel
-            ////////registrationBuilder.ForType<UserControlOther>().ImportProperty<UserControlOtherViewModel>(p => p.DataContext);
-
-            //////////add current assembly to catalog
-            ////////ComposablePartCatalog a = new AssemblyCatalog((this.GetType()).Assembly, registrationBuilder);
-
-            ////////container.SatisfyImportsOnce(a);
-
-            //https://msdn.microsoft.com/en-us/library/windows/apps/xx130657.aspx#ViewModelLocator
 
             _regionManager.RegisterViewWithRegion(RegionNames.ShellContent, typeof(UserControlOther));
 
