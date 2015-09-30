@@ -8,6 +8,9 @@ using Get.the.solution.Common;
 
 namespace Get.the.solution.Prism.Demo
 {
+    /// <summary>
+    /// Defines a menu entry for the Shell View
+    /// </summary>
     public class Menu : Get.the.solution.Common.MenuItem
     {
         public override string Header

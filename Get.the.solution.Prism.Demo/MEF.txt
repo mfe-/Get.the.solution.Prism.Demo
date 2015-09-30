@@ -1,4 +1,4 @@
-﻿
+﻿https://stefanhenneken.wordpress.com/category/managed-extensibility-framework/
 https://stefanhenneken.wordpress.com/2011/05/22/mef-teil-1-grundlagen-imports-und-exports/
 
 Export gibt an, dass die Klasse per DI injezierbar ist

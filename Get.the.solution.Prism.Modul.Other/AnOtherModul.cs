@@ -16,6 +16,12 @@ using Prism.Regions;
 
 namespace Get.the.solution.Prism.Modul.Other
 {
+    /// <summary>
+    /// Defines the module for this assembly.
+    /// </summary>
+    /// <remarks>
+    /// Makes the module discoverable for a module catalog by defining a class which implements IModule
+    /// </remarks>
     [ModuleExport(typeof(AnOtherModul))]
     public class AnOtherModul : IModule
     {
@@ -35,12 +41,7 @@ namespace Get.the.solution.Prism.Modul.Other
         public void Initialize()
         {
             //register our view manual
-            var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
-
-            _regionManager.RegisterViewWithRegion(RegionNames.ShellContent, typeof(UserControlOther));
-
-
-            
+            _regionManager.RegisterViewWithRegion(RegionNames.ShellContent, typeof(UserControlOther));           
         }
     }
 }

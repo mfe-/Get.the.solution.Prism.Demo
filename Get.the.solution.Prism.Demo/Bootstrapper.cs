@@ -11,8 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Get.the.solution.Common;
-using Get.the.solution.Prism.Modul;
-using Get.the.solution.Prism.Modul.Other;
 using Prism.Mef;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -21,13 +19,24 @@ using System.ComponentModel.Composition.Primitives;
 
 namespace Get.the.solution.Prism.Demo
 {
+    /// <summary>
+    /// Implements the main functionality for the MefBootstrapper for registering and importing classes
+    /// </summary>
     public class Bootstrapper : MefBootstrapper
     {
         /// <summary>
-        /// 1.
+        /// 1. Populates the Module Catalog.
         /// </summary>
-        protected override void ConfigureModuleCatalog()
+        /// <returns>A new Module Catalog.</returns>
+        /// <remarks>
+        /// This method uses the Module Discovery method of populating the Module Catalog. It requires a post-build event in each module to place
+        /// the module assembly in the module catalog directory.
+        /// </remarks>
+        protected override IModuleCatalog CreateModuleCatalog()
         {
+            var moduleCatalog = new DirectoryModuleCatalog();
+            moduleCatalog.ModulePath = @".\Modules";
+            return moduleCatalog;
         }
         /// <summary>
         /// 2. The ConfigureAggregateCatalog method allows you to add type registrations to the AggregateCatalog imperatively. 
@@ -35,8 +44,6 @@ namespace Get.the.solution.Prism.Demo
         /// </summary>
         protected override void ConfigureAggregateCatalog()
         {
-
-
             //https://stefanhenneken.wordpress.com/2013/01/21/mef-teil-11-neuerungen-unter-net-4-5/
             RegistrationBuilder registrationBuilder = new RegistrationBuilder();
             //export all classes which implement IWCFService
@@ -54,10 +61,6 @@ namespace Get.the.solution.Prism.Demo
 
             //add common project to catalog
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(AutoPopulateExportedViewsBehavior).Assembly, registrationBuilder));
-            //add our modul usercontrol1 and usercontrol2 to catalog
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(UserControl1).Assembly, registrationBuilder));
-            //add our modul UserControlOther to catalog
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(UserControlOther).Assembly, registrationBuilder));
 
         }
         /// <summary>
@@ -67,9 +70,8 @@ namespace Get.the.solution.Prism.Demo
         protected override CompositionContainer CreateContainer()
         {
             var container = base.CreateContainer();
-            //export container - so we can register additional types in the modules by importing the container
+            //export container - so we can register additional types in the modules by importing the container - recomposing
             container.ComposeExportedValue(container);
-
             return container;
         }
         /// <summary>
@@ -112,20 +114,6 @@ namespace Get.the.solution.Prism.Demo
 
             Application.Current.MainWindow = (MainWindow)this.Shell;
             Application.Current.MainWindow.Show();
-        }
-
-        //public static IEnumerable<Type> GetExportedTypes<T>()
-        //{
-        //    return catalog.Parts
-        //        .Where(part => IsPartOfType(part, typeof(T)))
-        //        .Select(part => ReflectionModelServices.GetPartType(part).Value);
-        //}
-
-        private static bool IsPartOfType(ComposablePartDefinition part, string exportTypeIdentity)
-        {
-            return (part.ExportDefinitions.Any(
-                def => def.Metadata.ContainsKey("ExportTypeIdentity") &&
-                       def.Metadata["ExportTypeIdentity"].Equals(exportTypeIdentity)));
         }
     }
 }

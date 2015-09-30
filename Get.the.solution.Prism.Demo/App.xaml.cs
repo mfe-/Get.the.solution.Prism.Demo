@@ -18,8 +18,6 @@ namespace Get.the.solution.Prism.Demo
         {
             base.OnStartup(e);
 
-
-
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Run();
 

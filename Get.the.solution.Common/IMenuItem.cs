@@ -9,7 +9,9 @@ using System.Windows.Input;
 
 namespace Get.the.solution.Common
 {
-    //http://stackoverflow.com/questions/1067903/how-can-i-bind-an-observablecollection-of-viewmodels-to-a-menuitem
+    /// <summary>
+    /// Interface for the main menu <see cref="http://stackoverflow.com/questions/1067903/how-can-i-bind-an-observablecollection-of-viewmodels-to-a-menuitem"/>
+    /// </summary>
     public interface IMenuItem : ICommand
     {
         string Header { get; }

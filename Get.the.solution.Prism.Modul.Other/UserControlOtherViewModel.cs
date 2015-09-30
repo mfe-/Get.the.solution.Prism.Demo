@@ -8,6 +8,9 @@ using Prism.Mvvm;
 
 namespace Get.the.solution.Prism.Modul.Other
 {
+    /// <summary>
+    /// Provides logical functionality for a view.
+    /// </summary>
     [Export]
     public class UserControlOtherViewModel : BindableBase
     {

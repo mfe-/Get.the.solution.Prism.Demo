@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Get.the.solution.Common
 {
+    /// <summary>
+    /// Exports the view with the RegionName. Exported views with this class will be automaticly added the the proper region when using <see cref="AutoPopulateExportedViewsBehavior"/>
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     [MetadataAttribute]
     public sealed class ViewExportAttribute : ExportAttribute, IViewRegionRegistration

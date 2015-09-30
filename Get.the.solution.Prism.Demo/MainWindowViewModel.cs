@@ -13,21 +13,41 @@ using Prism.Regions;
 
 namespace Get.the.solution.Prism.Demo
 {
+    /// <summary>
+    /// Provides the main functionality for switching between modules, by defining the Menu ItemsSource
+    /// </summary>
     [Export]
     public class MainWindowViewModel : BindableBase
     {
         private readonly IRegionManager RegionManager;
+        private IEnumerable<IMenuItem> _ImportedMenu;
+
+        /// <summary>
+        /// Get or sets the ImportedMenu.
+        /// </summary>
+        /// <remarks>
+        /// The ImportedMenu can be set during the runtime more then once. When setting the value of the ImportedMenu the ItemsSource for view menu is created.
+        /// </remarks>
+        [ImportMany(typeof(IMenuItem), AllowRecomposition = true)]
+        public IEnumerable<IMenuItem> ImportedMenu
+        {
+            get { return null; }
+            set
+            {
+                _ImportedMenu = value;
+                Menu = new ObservableCollection<IMenuItem>();
+                foreach (IMenuItem item in _ImportedMenu)
+                {
+                    Menu.Add(item);
+                }
+                OnPropertyChanged(() => Menu);
+            }
+        }
 
         [ImportingConstructor]
-        public MainWindowViewModel([ImportMany(typeof(IMenuItem))]IEnumerable<IMenuItem> menuitems, IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager)
         {
             RegionManager = regionManager;
-            Menu = new ObservableCollection<IMenuItem>();
-            foreach(IMenuItem item in menuitems)
-            {
-                Menu.Add(item);
-            }
-
             OpenFileCommand = new DelegateCommand<String>(OnOpenFileCommand);
         }
 
@@ -42,7 +62,9 @@ namespace Get.the.solution.Prism.Demo
         }
 
         private ICollection<IMenuItem> _Menu;
-
+        /// <summary>
+        /// Get or sets the menu items to display
+        /// </summary>
         public ICollection<IMenuItem> Menu
         {
             get { return _Menu; }

@@ -9,6 +9,9 @@ using Prism.Regions;
 
 namespace Get.the.solution.Prism.Modul
 {
+    /// <summary>
+    /// Provides logical functionality for a view.
+    /// </summary>
     [Export]
     public class UserControl2ViewModel : BindableBase
     {

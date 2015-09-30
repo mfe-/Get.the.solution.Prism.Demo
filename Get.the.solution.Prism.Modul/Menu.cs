@@ -9,6 +9,10 @@ using Get.the.solution.Common;
 
 namespace Get.the.solution.Prism.Modul
 {
+    /// <summary>
+    /// Defines a menu entry for the module
+    /// </summary>
+    [Export(typeof(IMenuItem))]
     public class Menu : Get.the.solution.Common.MenuItem
     {
         public override string Header
