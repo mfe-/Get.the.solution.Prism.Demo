@@ -122,10 +122,6 @@
       <Project>{5f6b2283-cc52-41b4-900a-efb037429de1}</Project>
       <Name>Get.the.solution.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Get.the.solution.Prism.Modul.Other\Get.the.solution.Prism.Modul.Other.csproj">
-      <Project>{e88afb71-f77f-4388-9bfb-353bfead6e83}</Project>
-      <Name>Get.the.solution.Prism.Modul.Other</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Get.the.solution.Prism.Modul\Get.the.solution.Prism.Modul.csproj">
       <Project>{7ea48172-e9d5-477b-873e-0f9c2e72fedb}</Project>
       <Name>Get.the.solution.Prism.Modul</Name>

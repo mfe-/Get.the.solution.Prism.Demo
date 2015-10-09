@@ -1,6 +1,8 @@
 ﻿https://stefanhenneken.wordpress.com/category/managed-extensibility-framework/
 https://stefanhenneken.wordpress.com/2011/05/22/mef-teil-1-grundlagen-imports-und-exports/
 
+http://www.codeproject.com/Articles/376033/From-Zero-to-Proficient-with-MEF
+
 Export gibt an, dass die Klasse per DI injezierbar ist
 Import gibt an, dass wir hier eine Exportierte Klassen instanz injezieren wollen
 
