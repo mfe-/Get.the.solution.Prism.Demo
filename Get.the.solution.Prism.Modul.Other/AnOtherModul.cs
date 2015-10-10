@@ -22,7 +22,7 @@ namespace Get.the.solution.Prism.Modul.Other
     /// <remarks>
     /// Makes the module discoverable for a module catalog by defining a class which implements IModule
     /// </remarks>
-    [ModuleExport(typeof(AnOtherModul))]
+    [ModuleExport( "AnOtherModul", typeof(AnOtherModul))]
     public class AnOtherModul : IModule
     {
         protected IRegionManager _regionManager;
