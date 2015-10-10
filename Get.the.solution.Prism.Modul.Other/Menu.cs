@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Get.the.solution.Common;
+using Microsoft.Practices.ServiceLocation;
+using Prism.Regions;
 
 namespace Get.the.solution.Prism.Modul.Other
 {
@@ -25,7 +27,7 @@ namespace Get.the.solution.Prism.Modul.Other
             {
                 return new List<Get.the.solution.Common.MenuItem>()
                     {
-                        new Get.the.solution.Common.MenuItem(){ Header="UserControlOther", Tag="/UserControlOther" }
+                        new Get.the.solution.Common.MenuItem((param)=>{ ServiceLocator.Current.GetInstance<IRegionManager>().RequestNavigate(RegionNames.ShellContent, new Uri(param.ToString(), UriKind.Relative));}, (param) => {return true;} ){ Header="UserControlOther", Tag="/UserControlOther" }
                     };
             }
         }

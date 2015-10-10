@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Commands;
 
 namespace Get.the.solution.Common
 {
@@ -18,6 +19,14 @@ namespace Get.the.solution.Common
         {
             Items = new List<IMenuItem>();
         }
+        public MenuItem(Action<object> executeMethod, Func<object,bool> canExecuteMethod)
+            : this()
+        {
+            Command = new DelegateCommand<object>(executeMethod, canExecuteMethod);
+        }
+
+        protected DelegateCommand<object> Command;
+
         protected string _Header;
         public virtual string Header
         {
@@ -94,14 +103,25 @@ namespace Get.the.solution.Common
 
         public virtual bool CanExecute(object parameter)
         {
-            return true;
+            if (Command != null)
+            {
+                return Command.CanExecute(parameter);
+            }
+            else
+            {
+                return true;
+            }
+      
         }
 
         public event EventHandler CanExecuteChanged;
 
         public virtual void Execute(object parameter)
         {
-
+            if(Command!=null)
+            {
+                Command.Execute(parameter);
+            }
         }
     }
 }

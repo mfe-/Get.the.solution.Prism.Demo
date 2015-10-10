@@ -26,8 +26,8 @@
                         <Setter Property="MenuItem.Icon" Value="{Binding Path=(common:IMenuItem.Icon)}"/>
                         <Setter Property="MenuItem.IsCheckable" Value="{Binding Path=(common:IMenuItem.IsCheckable)}"/>
                         <Setter Property="MenuItem.IsChecked" Value="{Binding Path=(common:IMenuItem.IsChecked)}"/>
-                        <!--<Setter Property="MenuItem.Command" Value="{Binding}"/>-->
-                        <Setter Property="MenuItem.Command" Value="{Binding DataContext.OpenFileCommand,RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>
+                        <!--Use this to execute from menu --> <Setter Property="MenuItem.Command" Value="{Binding}"/>
+                        <!--Use this to bind to viewmodel command <Setter Property="MenuItem.Command" Value="{Binding DataContext.OpenUriCommand,RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"/>-->
                         <Setter Property="MenuItem.CommandParameter" Value="{Binding Path=Tag}"/>
                         
                         <Setter Property="MenuItem.Visibility" Value="{Binding Path=(common:IMenuItem.Visible), Converter={StaticResource BooleanToVisibilityConverter}}"/>

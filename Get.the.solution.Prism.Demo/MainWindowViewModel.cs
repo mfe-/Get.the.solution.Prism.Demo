@@ -48,12 +48,12 @@ namespace Get.the.solution.Prism.Demo
         public MainWindowViewModel(IRegionManager regionManager)
         {
             RegionManager = regionManager;
-            OpenFileCommand = new DelegateCommand<String>(OnOpenFileCommand);
+            OpenUriCommand = new DelegateCommand<String>(OnOpenUriCommand);
         }
 
-        public DelegateCommand<String> OpenFileCommand { get; set; }
+        public DelegateCommand<String> OpenUriCommand { get; set; }
 
-        public void OnOpenFileCommand(String uri)
+        public void OnOpenUriCommand(String uri)
         {
             if (!String.IsNullOrWhiteSpace(uri))
             {

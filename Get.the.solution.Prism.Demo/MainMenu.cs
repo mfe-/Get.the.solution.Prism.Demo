@@ -25,7 +25,7 @@ namespace Get.the.solution.Prism.Demo
                 return new List<Get.the.solution.Common.MenuItem>()
                     {
                         new Get.the.solution.Common.MenuItem(){ Header="bla" },
-                        new Get.the.solution.Common.MenuItem(){ Header="Exit" }
+                        new Get.the.solution.Common.MenuItem((param)=>{ Environment.Exit(0);}, (param) => {return true;} ){ Header="Exit" }
                     };
             }
         }
